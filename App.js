@@ -23,6 +23,11 @@ import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 import VersionCheck from 'react-native-version-check';
 import LoginScreen from './src/screens/LoginScreen';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs([
+  "`new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.",
+  "`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method."
+]);
 
 const App = () => {
   const [initialRoute, setInitialRoute] = useState(null);
@@ -78,7 +83,7 @@ const App = () => {
   } else {
     console.log('notification permission not found');
   }
-  
+
   PushNotification.removeAllDeliveredNotifications();
   messaging()
     .getInitialNotification()
@@ -121,56 +126,73 @@ const App = () => {
     CheckAppUpdate();
   }, []);
 
-//  const CheckAppUpdate = () => {
-//    VersionCheck.needUpdate().then(res => {
-//        try {
-//          if (res.isNeeded) {
-//            Alert.alert(
-//              'Hold on!',
-//              'There is an updated version on the app store. Do you want to update?',
-//              [
-//                {
-//                  text: 'YES',
-//                  onPress: () => {
-//                    Linking.openURL(res.storeUrl);
-//                  },
-//                },
-//              ],
-//            );
-//          }
-//        } catch (error) {
-//
-//        }
-//    });
-//  };
 
-    const CheckAppUpdate = () => {
-      VersionCheck.needUpdate()
-        .then(res => {
-          if (res && res.isNeeded) {
-            // Check if res exists and isNeeded is true
-            Alert.alert(
-              'Hold on!',
-              'There is an updated version on the app store. Do you want to update?',
-              [
-                {
-                  text: 'YES',
-                  onPress: () => {
-                    Linking.openURL(res.storeUrl);
-                  },
-                },
-              ],
-            );
-          } else {
-            console.log('No update is needed or the response was invalid.');
-          }
-        })
-        .catch(error => {
-          // Handle unexpected errors from VersionCheck.needUpdate()
-          console.error('Error checking for updates:', error);
-          Alert.alert('Error', 'Unable to check for updates. Please try again later.');
-        });
-    };
+  const CheckAppUpdate = () => {
+    if (__DEV__) {
+      // In development mode, the app hasn't been published,
+      // so update information isn't available.
+      console.log('Development mode: Skipping update check because the app is not published yet.');
+
+      // If you ever need to simulate an update in development,
+      // you can uncomment the block below:
+      /*
+      const simulatedRes = {
+        isNeeded: true, // Change to false to simulate no update needed
+        storeUrl: 'https://your-simulated-url.com', // Replace with a test URL
+      };
+
+      if (simulatedRes && simulatedRes.isNeeded) {
+        Alert.alert(
+          'Hold on!',
+          'There is an updated version available. Do you want to update?',
+          [
+            {
+              text: 'YES',
+              onPress: () => Linking.openURL(simulatedRes.storeUrl),
+            },
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+          ],
+        );
+      } else {
+        console.log('Simulated response: no update needed');
+      }
+      */
+      return;
+    }
+
+    // Production: perform the real update check
+    VersionCheck.needUpdate()
+      .then(res => {
+        if (res && res.isNeeded) {
+          Alert.alert(
+            'Hold on!',
+            'There is an updated version on the app store. Do you want to update?',
+            [
+              {
+                text: 'YES',
+                onPress: () => Linking.openURL(res.storeUrl),
+              },
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+            ],
+          );
+        } else {
+          console.log('No update is needed or the response was invalid.');
+        }
+      })
+      .catch(error => {
+        console.error('Error checking for updates:', error);
+        Alert.alert('Error', 'Unable to check for updates. Please try again later.');
+      });
+  };
+
+
+
 
   if (initialRoute === null) {
     return null; // or a loading spinner
