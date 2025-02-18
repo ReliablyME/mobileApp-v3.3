@@ -9,6 +9,7 @@ import {
   Linking,
   ActivityIndicator,
 } from 'react-native';
+import { BackHandler } from 'react-native';
 import axios from 'axios';
 import {Fonts} from '../components/fonts';
 import {baseUrl} from '../apis/baseUrl';
@@ -45,6 +46,7 @@ const NotificationScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    const subscription = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     const handleBackPress = () => {
       if (navigation.canGoBack()) {
         navigation.goBack();
@@ -62,8 +64,7 @@ const NotificationScreen = ({navigation}) => {
     });*/
 
     return () => {
-      backHandler.remove();
-      unsubscribe();
+        subscription.remove();
     };
   }, [navigation]);
   

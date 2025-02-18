@@ -186,16 +186,19 @@ const Dashboard = ({navigation, route}) => {
     setShow(false);
   };
   const appState = useRef(AppState.currentState);
-  useEffect(async () => {
-    const modalitem = await AsyncStorage.getItem('modalid');
-    // console.log(modalitem, 'noticount');
-    {
-      if (!modalitem) {
-        setShow(true);
-      } else {
-        setShow(false);
-      }
+  useEffect(() => {
+    async function getModal() {
+        const modalitem = await AsyncStorage.getItem('modalid');
+        // console.log(modalitem, 'noticount');
+        {
+          if (!modalitem) {
+            setShow(true);
+          } else {
+            setShow(false);
+          }
+        }
     }
+    getModal();
 
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (

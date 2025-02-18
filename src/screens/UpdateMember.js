@@ -45,12 +45,15 @@ const UpdateMember = ({navigation, route}) => {
   const [message, setmessage] = useState('');
   //const userInfo = useSelector(state => state.user.user);
 
-  useEffect(async () => {
-    setfirstname(await AsyncStorage.getItem('firstname'));
-    setlastname(await AsyncStorage.getItem('lastname'));
-    setSelectedTimeZone(await AsyncStorage.getItem('timezone'));
-    const mobilenum = await AsyncStorage.getItem('mobile');
-    setMobileNumber(mobilenum);
+  useEffect(() => {
+    async function renderPage() {
+        setfirstname(await AsyncStorage.getItem('firstname'));
+        setlastname(await AsyncStorage.getItem('lastname'));
+        setSelectedTimeZone(await AsyncStorage.getItem('timezone'));
+        const mobilenum = await AsyncStorage.getItem('mobile');
+        setMobileNumber(mobilenum);
+    }
+    renderPage();
   }, []);
 
 //  const checkLogin = async () => {

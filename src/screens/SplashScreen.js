@@ -15,20 +15,23 @@ import {setUserDetail} from '../store/action/user.action';
 
 const SplashScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  useEffect(async () => {
-    const userid = await AsyncStorage.getItem('userid');
-    // console.log(userid, 'userid splash');
-    if (!userid) {
-      setTimeout(() => {
-        // navigation.navigate('LoginScreen');
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'LoginScreen'}],
-        });
-      }, 2000);
-    } else {
-      checkUserExist();
+  useEffect(() => {
+    async function checkUserId() {
+        const userid = await AsyncStorage.getItem('userid');
+        // console.log(userid, 'userid splash');
+        if (!userid) {
+          setTimeout(() => {
+            // navigation.navigate('LoginScreen');
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'LoginScreen'}],
+            });
+          }, 2000);
+        } else {
+          checkUserExist();
+        }
     }
+    checkUserId();
   }, []);
 
   const checkUserExist = async () => {
