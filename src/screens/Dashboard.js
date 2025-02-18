@@ -29,6 +29,11 @@ import {
   Settingwebapp,
   Adminwebapp,
 } from '../apis/baseUrl';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs([
+  "`new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.",
+  "`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method."
+]);
 
 const Dashboard = ({navigation, route}) => {
   const isFocused = useIsFocused();
