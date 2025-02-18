@@ -1,0 +1,11 @@
+{
+  "name": "Reliably",
+  "displayName": "Reliably",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "125e68fc-5f88-4b29-837f-fa314aa7cb8b"
+      }
+    }
+  }
+}

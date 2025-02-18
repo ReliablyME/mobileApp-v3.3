@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "722962774114",
+    "project_id": "reliablyme-mobile-app",
+    "storage_bucket": "reliablyme-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722962774114:android:b7e77cea0909b0963ff93b",
+        "android_client_info": {
+          "package_name": "com.reliably"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722962774114-aoh3h1tue32rdbmi5n4l13k29lo9hvm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBr3Vu6I1oGWG2oAv7wwKlXVM8RBSCkmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722962774114-aoh3h1tue32rdbmi5n4l13k29lo9hvm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
